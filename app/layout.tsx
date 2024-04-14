@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import {Inter, Roboto} from "next/font/google";
-import {ReactNode} from "react";
-import Image from "next/image";
-import background from "../public/background.png";
+import { Roboto } from "next/font/google";
+import { ReactNode } from "react";
 import "./globals.css";
+import { cn } from "@/utils/cn";
 
-const inter = Roboto({ weight: "500", subsets: ["latin"] });
+const roboto = Roboto({
+  weight: "500",
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
-  title: "Videofix",
+  title: "Video-Store",
   description: "Watch your Videos from anywhere!",
 };
 
@@ -18,9 +21,9 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className="min-h-dvh">
-      <body className={`${inter.className} min-h-dvh flex`}>
-          {children}
+    <html lang="en-GB" suppressHydrationWarning>
+      <body className={cn("font-roboto dark min-h-dvh", roboto.variable)}>
+        {children}
       </body>
     </html>
   );
