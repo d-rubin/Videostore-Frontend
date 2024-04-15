@@ -3,16 +3,12 @@ import { Input } from "@/components/ui/input";
 
 export default function LoginPage() {
   return (
-    <Card className="w-full self-center sm:w-fit">
-      <CardHeader>
-        <CardTitle>
-          <h1 className="text-center text-3xl">Sign In</h1>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+    <Card className="flex w-full flex-col gap-8 p-8 sm:w-fit">
+      <h1 className="text-4xl">Sign In</h1>
+      <div className="flex flex-col gap-4">
         <Input name="username" placeholder="Username" />
         <Input name="password" placeholder="Password" />
-      </CardContent>
+      </div>
     </Card>
   );
 }
