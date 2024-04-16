@@ -1,14 +1,18 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import AuthCard from "@/components/AuthCard";
 
 export default function LoginPage() {
   return (
-    <Card className="flex w-full flex-col gap-8 p-8 sm:w-fit">
-      <h1 className="text-4xl">Sign In</h1>
-      <div className="flex flex-col gap-4">
-        <Input name="username" placeholder="Username" />
-        <Input name="password" placeholder="Password" />
-      </div>
-    </Card>
+    <AuthCard
+      title="Sign In"
+      inputs={[
+        { name: "username", placeholder: "Username" },
+        { name: "password", placeholder: "Password" },
+      ]}
+      link={{
+        description: "Neu bei Netflix?",
+        label: "Jetzt registrieren",
+        href: "/register",
+      }}
+    />
   );
 }
