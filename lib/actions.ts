@@ -1,48 +1,111 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { LoginSchema, RegisterSchema, TLoginSchema } from "./schemas";
+import { LoginSchema, RegisterSchema } from "./schemas";
 import { redirect } from "next/navigation";
 
-export const login = async (data: TLoginSchema) => {
+type TResolution = "360" | "480" | "720" | "1080";
+
+export const login = async (formData: FormData) => {
+  const data = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+  let redirectURL = "/login";
+
   const result = LoginSchema.safeParse(data);
+
   if (!result.success) {
-    return { errors: result.error.issues.map((issue) => issue.message) };
+    redirect(
+      `${redirectURL}?error=${encodeURIComponent(result.error.issues.map((issue) => issue.message).join(". "))}`,
+    );
   }
 
   try {
     const apiResult = await fetch(`${process.env.API_URL}/auth/login/`, {
       method: "POST",
       body: JSON.stringify(result.data),
+      headers: {
+        "Content-type": "application/json",
+      },
     });
+
     const apiData = await apiResult.json();
+
     if (apiData.status === 200) {
       cookies().set("AuthToken", apiData.token);
-      return { errors: [], status: 200, data: apiData };
-    }
-    return { errors: [apiData.message] };
+      redirectURL = "/home";
+    } else redirectURL = `/login?error=${encodeURIComponent(apiData.message)}`;
   } catch (error: any) {
-    return { errors: [error.message] };
+    redirectURL = `/login?error=${encodeURIComponent(error.message)}`;
   }
+  redirect(redirectURL);
 };
 
-export const register = async (data: TLoginSchema) => {
+export const register = async (formData: FormData) => {
+  const data = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+    email: formData.get("email"),
+  };
+  let redirectURL = "/register";
+
+  if (data.password !== formData.get("password2")) {
+    redirectURL = `/register?error=${encodeURIComponent("Passwords do not match.")}`;
+  }
+
   const result = RegisterSchema.safeParse(data);
   if (!result.success) {
-    return { errors: result.error.issues.map((issue) => issue.message) };
+    redirectURL = `/register?error=${encodeURIComponent(result.error.issues.map((issue) => issue.message).join(". "))}`;
   }
 
   try {
-    const apiResult = await fetch(`${process.env.API_URL}/auth/register/`, {
-      method: "POST",
-      body: JSON.stringify(result.data),
-    });
-    const apiData = await apiResult.json();
-    if (apiData.status === 200) {
-      redirect("/login");
+    if (result.success) {
+      const apiResult = await fetch(`${process.env.API_URL}/auth/register/`, {
+        method: "POST",
+        body: JSON.stringify(result.data),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      const apiData = await apiResult.json();
+      if (apiData.status === 201) {
+        redirectURL = "/login?registered=true";
+      } else
+        redirectURL = `/register?error=${encodeURIComponent(apiData.message)}`;
     }
-    return { errors: [apiData.message] };
   } catch (error: any) {
-    return { errors: [error.message] };
+    redirectURL = `/register?error=${encodeURIComponent(error.message)}`;
   }
+  redirect(redirectURL);
 };
+
+export async function getAllVideos() {
+  const authToken = cookies().get("AuthToken")?.value;
+  const response = await fetch(`${process.env.API_URL}/videos/`, {
+    headers: {
+      Authorization: `Token ${authToken}`,
+      "Content-type": "application/json",
+    },
+  });
+  if (response.ok) return response.json();
+  return { data: null, status: 500, message: "Something went wrong" };
+}
+
+export async function getSingleVideo(
+  title: string,
+  resolution: TResolution = "360",
+) {
+  const authToken = cookies().get("AuthToken")?.value;
+  const response = await fetch(
+    `${process.env.API_URL}/videos/download/${title}_${resolution}`,
+    {
+      headers: {
+        Authorization: `Token ${authToken}`,
+        "Content-type": "application/octet-stream",
+      },
+    },
+  );
+  if (response.ok) return response.json();
+  return { data: null, status: 500, message: "Something went wrong" };
+}

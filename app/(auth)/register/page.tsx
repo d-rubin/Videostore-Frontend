@@ -1,5 +1,10 @@
 import AuthCard from "@/components/AuthCard";
-export default function RegisterPage() {
+import { register } from "@/lib/actions";
+export default function RegisterPage({
+  searchParams,
+}: {
+  searchParams?: { error?: string };
+}) {
   return (
     <AuthCard
       title="Sign up"
@@ -14,6 +19,8 @@ export default function RegisterPage() {
         description: "Already have an account?",
         label: "Sign in",
       }}
+      handleSubmit={register}
+      error={searchParams?.error}
     />
   );
 }

@@ -28,6 +28,10 @@ const config = {
           DEFAULT: "rgb(229 8 21)",
           foreground: "rgb(255 255 255)",
         },
+        success: {
+          DEFAULT: "rgb(28,241,28)",
+          foreground: "rgb(37,70,7)",
+        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
