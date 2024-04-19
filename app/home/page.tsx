@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import Image from "next/image";
 import { getAllVideos } from "@/lib/actions";
 
 type TVideo = {
@@ -10,24 +11,32 @@ type TVideo = {
 
 export default async function HomePage() {
   const { data: videos } = await getAllVideos();
+  console.log(videos);
 
   return (
-    <div className="flex max-h-dvh flex-col">
-      <h1 className="mb-8 text-2xl font-bold text-black">
+    <div className="align-to flex h-dvh w-full flex-col pt-32">
+      <h1 className="mb-8 text-4xl font-bold text-primary shadow-2xl">
         Welcome to the home page!
       </h1>
       <div className="flex flex-wrap gap-4 overflow-y-auto">
         {videos &&
           Array.isArray(videos) &&
           videos.map((video: TVideo) => (
-            <Link key={video.title} href={`home/${video.title}`}>
-              <Card key={video.title} className="relative h-40 w-56">
-                {/*<Image*/}
-                {/*  src={video.thumbnail}*/}
-                {/*  alt={video.title}*/}
-                {/*  fill*/}
-                {/*  className="object-cover"*/}
-                {/*/>*/}
+            <Link
+              key={video.title}
+              href={`home/${video.title}`}
+              className="group overflow-hidden rounded-2xl"
+            >
+              <Card
+                key={video.title}
+                className="relative h-40 w-56 rounded-2xl"
+              >
+                <Image
+                  src={video.thumbnail}
+                  alt={video.title}
+                  fill
+                  className="rounded-2xl object-cover duration-200 animate-in animate-out group-hover:scale-110"
+                />
               </Card>
             </Link>
           ))}
