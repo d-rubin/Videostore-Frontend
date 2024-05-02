@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en-GB" suppressHydrationWarning>
       <body
         className={cn(
-          "font-roboto AuthLayout dark flex h-dvh min-h-dvh w-full items-center justify-center px-4 sm:px-8",
+          "font-roboto dark h-dvh min-h-dvh w-full",
           roboto.variable,
         )}
       >

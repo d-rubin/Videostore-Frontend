@@ -11,13 +11,9 @@ type TVideo = {
 
 export default async function HomePage() {
   const { data: videos } = await getAllVideos();
-  console.log(videos);
 
   return (
-    <div className="align-to flex h-dvh w-full flex-col pt-32">
-      <h1 className="mb-8 text-4xl font-bold text-primary shadow-2xl">
-        Welcome to the home page!
-      </h1>
+    <div className="align-to flex h-dvh w-full flex-col">
       <div className="flex flex-wrap gap-4 overflow-y-auto">
         {videos &&
           Array.isArray(videos) &&

@@ -9,10 +9,14 @@ export default function RegisterPage({
     <AuthCard
       title="Sign up"
       inputs={[
-        { name: "username", placeholder: "Username" },
-        { name: "email", placeholder: "Email" },
-        { name: "password", placeholder: "Password" },
-        { name: "password2", placeholder: "Type password again" },
+        { name: "username", placeholder: "Username", type: "text" },
+        { name: "email", placeholder: "Email", type: "email" },
+        { name: "password", placeholder: "Password", type: "password" },
+        {
+          name: "password2",
+          placeholder: "Type password again",
+          type: "password",
+        },
       ]}
       link={{
         href: "/login",

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { LoginSchema, RegisterSchema } from "./schemas";
+import { LoginSchema, RegisterSchema, UploadSchema } from "./schemas";
 import { redirect } from "next/navigation";
 
 type TResolution = "360" | "480" | "720" | "1080";
@@ -108,4 +108,35 @@ export async function getSingleVideo(
   );
   if (response.ok) return response.json();
   return { data: null, status: 500, message: "Something went wrong" };
+}
+
+export async function uploadVideo(formData: FormData) {
+  const data = {
+    file: formData.get("file"),
+    title: formData.get("title"),
+    description: formData.get("description"),
+    thumbnail: formData.get("thumbnail"),
+  };
+
+  let redirectURL = "/home/upload";
+  const result = UploadSchema.safeParse(data);
+
+  if (!result.success) {
+    redirectURL = `/home/upload?error=${encodeURIComponent(result.error.issues.map((issue) => issue.message).join(". "))}`;
+  }
+
+  try {
+    const authToken = cookies().get("AuthToken")?.value;
+    const response = await fetch(`${process.env.API_URL}/videos/upload/`, {
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) redirectURL = "/home";
+  } catch (error: any) {
+    redirectURL = `/home/upload?error=${encodeURIComponent(error.message)}`;
+  }
+  redirect(redirectURL);
 }

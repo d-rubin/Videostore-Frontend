@@ -9,6 +9,7 @@ type AuthCardProps = {
   inputs: {
     name: string;
     placeholder: string;
+    type?: string;
   }[];
   link: {
     description: string;
@@ -46,6 +47,7 @@ const AuthCard = ({
               key={crypto.randomUUID()}
               name={input.name}
               placeholder={input.placeholder}
+              type={input.type}
             />
           ))}
           {error && (

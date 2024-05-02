@@ -10,8 +10,8 @@ export default function LoginPage({
     <AuthCard
       title="Sign In"
       inputs={[
-        { name: "username", placeholder: "Username" },
-        { name: "password", placeholder: "Password" },
+        { name: "username", placeholder: "Username", type: "text" },
+        { name: "password", placeholder: "Password", type: "password" },
       ]}
       link={{
         description: "Neu bei Netflix?",
