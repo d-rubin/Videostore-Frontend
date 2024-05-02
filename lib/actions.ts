@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { LoginSchema, RegisterSchema, UploadSchema } from "./schemas";
 import { redirect } from "next/navigation";
 
-type TResolution = "360" | "480" | "720" | "1080";
+export type TResolution = "360" | "480" | "720" | "1080";
 
 export const login = async (formData: FormData) => {
   const data = {
@@ -88,24 +88,6 @@ export async function getAllVideos() {
       "Content-type": "application/json",
     },
   });
-  if (response.ok) return response.json();
-  return { data: null, status: 500, message: "Something went wrong" };
-}
-
-export async function getSingleVideo(
-  title: string,
-  resolution: TResolution = "360",
-) {
-  const authToken = cookies().get("AuthToken")?.value;
-  const response = await fetch(
-    `${process.env.API_URL}/videos/download/${title}_${resolution}`,
-    {
-      headers: {
-        Authorization: `Token ${authToken}`,
-        "Content-type": "application/octet-stream",
-      },
-    },
-  );
   if (response.ok) return response.json();
   return { data: null, status: 500, message: "Something went wrong" };
 }

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.32.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.368.0",
@@ -18,12 +19,16 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "videojs-contrib-hls": "^5.15.0",
+    "videojs-contrib-quality-levels": "^4.1.0",
+    "videojs-http-source-selector": "^1.1.6",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/video.js": "^7.3.58",
     "@typescript-eslint/parser": "^7.4.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
@@ -35,6 +40,7 @@
     "prettier-eslint": "^16.3.0",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "video.js": "^8.12.0"
   }
 }
