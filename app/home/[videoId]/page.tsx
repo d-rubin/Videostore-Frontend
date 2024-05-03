@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import videojs from "video.js";
-import VideoJS from "@/components/VideoPlayer";
 import { useParams } from "next/navigation";
 import { TResolution } from "@/lib/actions";
+import VideoJS from "@/components/VideoPlayer";
+import { useRef } from "react";
 
 export function getSingleVideoUrl(
   title: string,
@@ -15,24 +14,24 @@ export function getSingleVideoUrl(
 
 export default function Home() {
   const params = useParams<{ videoId: string }>();
+  const videoUrl = getSingleVideoUrl(params.videoId);
   const playerRef = useRef(null);
 
-  const videoJsOptionsM3u8 = {
+  const videoJsOptions = {
+    autoplay: true,
     controls: true,
-    autoplay: false,
-    width: 400,
+    responsive: true,
+    fluid: true,
     sources: [
       {
-        src: getSingleVideoUrl(params.videoId),
+        src: videoUrl,
         type: "application/x-mpegURL",
       },
     ],
   };
 
-  const handlePlayerReady = (player: any) => {
+  const handlePlayerReady = (player) => {
     playerRef.current = player;
-
-    console.log(player.qualityLevels());
 
     // You can handle player events here, for example:
     player.on("waiting", () => {
@@ -43,10 +42,11 @@ export default function Home() {
       videojs.log("player will dispose");
     });
   };
+
   return (
     <main>
       <div className="aspect-video w-full">
-        <VideoJS options={videoJsOptionsM3u8} onReady={handlePlayerReady} />
+        <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
       </div>
     </main>
   );

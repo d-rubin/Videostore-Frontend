@@ -23,10 +23,7 @@ export default async function HomePage() {
               href={`home/${video.title}`}
               className="group overflow-hidden rounded-2xl"
             >
-              <Card
-                key={video.title}
-                className="relative h-40 w-56 rounded-2xl"
-              >
+              <Card className="relative h-40 w-56 rounded-2xl">
                 <Image
                   src={video.thumbnail}
                   alt={video.title}

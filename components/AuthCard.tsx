@@ -44,7 +44,7 @@ const AuthCard = ({
         <form action={handleSubmit} className="flex flex-col gap-4">
           {inputs.map((input) => (
             <Input
-              key={crypto.randomUUID()}
+              key={input.name}
               name={input.name}
               placeholder={input.placeholder}
               type={input.type}
