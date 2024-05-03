@@ -14,7 +14,7 @@ export default function LoginPage({
         { name: "password", placeholder: "Password", type: "password" },
       ]}
       link={{
-        description: "Neu bei Netflix?",
+        description: "Neu bei VideoStore?",
         label: "Jetzt registrieren",
         href: "/register",
       }}

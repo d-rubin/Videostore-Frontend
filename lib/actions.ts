@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { LoginSchema, RegisterSchema, UploadSchema } from "./schemas";
 import { redirect } from "next/navigation";
 
+import { TVideo } from "@/lib/helper";
+
 export type TResolution = "360" | "480" | "720" | "1080";
 
 export const login = async (formData: FormData) => {

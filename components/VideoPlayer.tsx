@@ -1,37 +1,68 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export const VideoJS = (props) => {
-  const videoRef = useRef(null);
-  const playerRef = useRef(null);
-  const { options, onReady } = props;
+export const VideoJS = (props: { src: string }) => {
+  const videoRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<any>(null);
+  const { src } = props;
+
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: [
+      {
+        src,
+        type: "application/x-mpegURL",
+      },
+    ],
+  };
+
+  const handlePlayerReady = (player: any) => {
+    playerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on("waiting", () => {
+      videojs.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      videojs.log("player will dispose");
+    });
+  };
 
   useEffect(() => {
     // Make sure Video.js player is only initialized once
-    if (!playerRef.current) {
+    if (!playerRef.current && videoRef.current) {
       // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode.
-      const videoElement = document.createElement("video-js");
+      const videoElement = document.createElement("(.)video-js");
 
       videoElement.classList.add("vjs-big-play-centered");
       videoRef.current.appendChild(videoElement);
 
-      const player = (playerRef.current = videojs(videoElement, options, () => {
-        videojs.log("player is ready");
-        onReady && onReady(player);
-      }));
+      // @ts-ignore
+      const player = (playerRef.current = videojs(
+        videoElement,
+        videoJsOptions,
+        () => {
+          videojs.log("player is ready");
+          handlePlayerReady(player);
+        },
+      ));
 
       // You could update an existing player in the `else` block here
       // on prop change, for example:
     } else {
-      const player = playerRef.current;
+      const player = playerRef.current!;
 
-      player.autoplay(options.autoplay);
-      player.src(options.sources);
+      player.autoplay(videoJsOptions.autoplay);
+      player.src(videoJsOptions.sources);
     }
-  }, [options, videoRef]);
+  }, [videoJsOptions, videoRef]);
 
   // Dispose the Video.js player when the functional component unmounts
   useEffect(() => {
