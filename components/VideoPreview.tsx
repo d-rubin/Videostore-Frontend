@@ -15,7 +15,7 @@ export default function VideoPreview({
     <div className={cn("relative h-full w-full", className)}>
       <Image
         fill
-        sizes={"100%"}
+        sizes="100%"
         src={videoData.thumbnail}
         alt={videoData.title}
         className="object-cover"
