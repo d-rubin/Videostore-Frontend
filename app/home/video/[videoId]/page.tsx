@@ -18,6 +18,7 @@ export default async function VideoPage({
       <video width="352" height="198" controls>
         <source
           src={getSingleVideoUrl(params.videoId)}
+          // src="https://videoflix.s3.eu-central-1.amazonaws.com/Cliff_360p.m3u8"
           type="application/x-mpegURL"
         />
       </video>

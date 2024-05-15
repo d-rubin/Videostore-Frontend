@@ -27,7 +27,6 @@ export const UploadSchema = z.object({
     .string()
     .min(3, "Description must have at least 3 characters!")
     .max(150, "Description must have at most 150 characters!"),
-  thumbnail: z.unknown(),
 });
 
 export type TUploadSchema = z.infer<typeof UploadSchema>;

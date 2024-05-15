@@ -99,7 +99,6 @@ export async function uploadVideo(formData: FormData) {
     file: formData.get("file"),
     title: formData.get("title"),
     description: formData.get("description"),
-    thumbnail: formData.get("thumbnail"),
   };
 
   let redirectURL = "/home/upload";

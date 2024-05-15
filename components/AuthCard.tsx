@@ -30,7 +30,7 @@ const AuthCard = ({
   registered,
 }: AuthCardProps) => {
   return (
-    <Card className="flex w-full flex-col gap-8 px-8 py-10 opacity-90 sm:w-[25rem] sm:px-16">
+    <Card className="flex w-full flex-col gap-8 px-8 py-10 opacity-90 sm:w-[26rem] sm:px-16">
       <>
         <h1 className="text-4xl font-semibold">{title}</h1>
         {registered === "true" && (
@@ -56,9 +56,11 @@ const AuthCard = ({
             </p>
           )}
           <Button type="submit">{title}</Button>
-          <span className="flex w-fit flex-row gap-2">
-            <p className="opacity-70">{link.description}</p>
-            <Link href={link.href}>{link.label}</Link>
+          <span className="flex w-fit flex-row flex-wrap gap-2">
+            <p className="min-w-fit flex-1 opacity-70">{link.description}</p>
+            <Link className="min-w-fit flex-1" href={link.href}>
+              {link.label}
+            </Link>
           </span>
         </form>
       </>

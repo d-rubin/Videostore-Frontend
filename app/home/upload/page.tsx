@@ -19,14 +19,6 @@ export default function UploadPage({
         <Input id="title" type="text" name="title" />
         <label htmlFor="description">Enter a description</label>
         <Input id="description" type="text" name="description" />
-        <label htmlFor="thumbnail">Upload a Thumbnail</label>
-        <Input
-          id="thumbnail"
-          name="thumbnail"
-          type="file"
-          accept="image/*"
-          required
-        />
         {searchParams?.error && (
           <p className="text-primary">{searchParams.error}</p>
         )}
