@@ -1,11 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { uploadVideo } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
+import { Alert } from "@/components/ui/alert";
 
 export default function UploadPage({
   searchParams,
 }: {
-  searchParams?: { error?: string };
+  searchParams?: { error?: string; success?: "true" };
 }) {
   return (
     <>
@@ -13,6 +14,9 @@ export default function UploadPage({
         className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 transform flex-col gap-2 px-4 md:max-w-[30rem]"
         action={uploadVideo}
       >
+        {searchParams?.success === "true" && (
+          <Alert variant="success">Video uploaded successfully!</Alert>
+        )}
         <label htmlFor="upload">Upload a Video</label>
         <Input id="upload" name="file" type="file" accept="video/*" required />
         <label htmlFor="title">Enter a title</label>

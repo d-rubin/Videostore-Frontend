@@ -4,8 +4,6 @@ import { cookies } from "next/headers";
 import { LoginSchema, RegisterSchema, UploadSchema } from "./schemas";
 import { redirect } from "next/navigation";
 
-import { TVideo } from "@/lib/helper";
-
 export type TResolution = "360" | "480" | "720" | "1080";
 
 export const login = async (formData: FormData) => {
@@ -117,9 +115,13 @@ export async function uploadVideo(formData: FormData) {
       method: "POST",
       body: formData,
     });
-    if (response.ok) redirectURL = "/home";
+    if (response.ok) redirectURL = "/home/upload?success=true";
   } catch (error: any) {
     redirectURL = `/home/upload?error=${encodeURIComponent(error.message)}`;
   }
   redirect(redirectURL);
+}
+
+export async function changeResolution(resolution: TResolution) {
+  redirect(`?resolution=${resolution}`);
 }

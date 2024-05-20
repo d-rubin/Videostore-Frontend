@@ -1,27 +1,25 @@
-import { getAllVideos } from "@/lib/actions";
-import VideoPreview from "@/components/VideoPreview";
-
-import { getSingleVideoUrl, TVideo } from "@/lib/helper";
-import VideoPlayer from "@/components/VideoPlayer";
+import { getSingleVideoUrl } from "@/lib/helper";
+import { ResolutionSelect } from "@/components/ResolutionSelect";
+import { TResolution } from "@/lib/actions";
 
 export default async function VideoPage({
   params,
+  searchParams,
 }: {
   params: { videoId: string };
+  searchParams?: { resolution?: TResolution };
 }) {
-  const { data } = await getAllVideos();
-  const video = data.find((video: TVideo) => video.title === params.videoId);
-
   return (
-    <main className="h-full w-full overflow-hidden object-cover">
-      {/*<VideoPlayer src={video} />*/}
-      <video width="352" height="198" controls>
-        <source
-          src={getSingleVideoUrl(params.videoId)}
-          // src="https://videoflix.s3.eu-central-1.amazonaws.com/Cliff_360p.m3u8"
-          type="application/x-mpegURL"
-        />
-      </video>
-    </main>
+    <div className="flex justify-center">
+      <div className="flex flex-col items-end">
+        <ResolutionSelect className="mr-2" />
+        <video controls autoPlay className="">
+          <source
+            src={getSingleVideoUrl(params.videoId, searchParams?.resolution)}
+            type="application/x-mpegURL"
+          />
+        </video>
+      </div>
+    </div>
   );
 }
