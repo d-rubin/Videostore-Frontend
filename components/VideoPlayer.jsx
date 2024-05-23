@@ -19,7 +19,6 @@ const VideoJS = (props) => {
       videoRef.current.appendChild(videoElement);
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
-        videojs.log("player is ready");
         onReady && onReady(player);
       }));
 
@@ -71,20 +70,7 @@ const VideoPlayer = (props) => {
     ],
   };
 
-  const handlePlayerReady = (player) => {
-    playerRef.current = player;
-
-    // You can handle player events here, for example:
-    player.on("waiting", () => {
-      videojs.log("player is waiting");
-    });
-
-    player.on("dispose", () => {
-      videojs.log("player will dispose");
-    });
-  };
-
-  return <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />;
+  return <VideoJS options={videoJsOptions} />;
 };
 
 export default VideoPlayer;

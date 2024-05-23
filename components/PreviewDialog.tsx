@@ -9,7 +9,6 @@ export default function PreviewDialog({ videoData }: { videoData: TVideo }) {
   const { replace } = useRouter();
 
   const handleBodyClick = (event: MouseEvent<HTMLDivElement>) => {
-    console.log(event);
     if ((event.target as HTMLDivElement).nodeName !== "SPAN") {
       replace("/home");
     }
