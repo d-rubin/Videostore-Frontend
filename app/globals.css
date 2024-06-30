@@ -79,3 +79,22 @@
   height: 100dvh;
   width: 100vw;
 }
+
+.HomeLayout {
+  background-image: url("../public/bg-portal.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100dvh;
+  width: 100vw;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
