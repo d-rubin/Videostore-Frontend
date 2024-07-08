@@ -91,3 +91,7 @@ export async function getAllVideos() {
   if (response.ok) return response.json();
   return { data: null, status: 500, message: "Something went wrong" };
 }
+
+export async function changeResolution(resolution: TResolution) {
+  redirect(`?resolution=${resolution}`);
+}
