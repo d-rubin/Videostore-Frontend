@@ -92,36 +92,6 @@ export async function getAllVideos() {
   return { data: null, status: 500, message: "Something went wrong" };
 }
 
-export async function uploadVideo(formData: FormData) {
-  const data = {
-    file: formData.get("file"),
-    title: formData.get("title"),
-    description: formData.get("description"),
-  };
-
-  let redirectURL = "/home/upload";
-  const result = UploadSchema.safeParse(data);
-
-  if (!result.success) {
-    redirectURL = `/home/upload?error=${encodeURIComponent(result.error.issues.map((issue) => issue.message).join(". "))}`;
-  }
-
-  try {
-    const authToken = cookies().get("AuthToken")?.value;
-    const response = await fetch(`${process.env.API_URL}/videos/upload/`, {
-      headers: {
-        Authorization: `Token ${authToken}`,
-      },
-      method: "POST",
-      body: formData,
-    });
-    if (response.ok) redirectURL = "/home/upload?success=true";
-  } catch (error: any) {
-    redirectURL = `/home/upload?error=${encodeURIComponent(error.message)}`;
-  }
-  redirect(redirectURL);
-}
-
 export async function changeResolution(resolution: TResolution) {
   redirect(`?resolution=${resolution}`);
 }

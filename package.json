@@ -24,6 +24,7 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "universal-cookie": "^7.1.4",
     "videojs-contrib-quality-levels": "^4.1.0",
     "zod": "^3.22.4"
   },
