@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "videoflix.s3.amazonaws.com",
+        hostname: "s3.daniel-rubin.de",
       },
     ],
   },
